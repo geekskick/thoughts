@@ -90,14 +90,14 @@ Note: There is some weird stuff with the green/blue colours but that's so that w
 Building this project gives linker errors. I can't remember the *exact* error message but it was something to do with no finding the gpio.c file. 
 
 ## Solution
-Go into the project's linker settings and add to the includepath the 'drivers/gpio' directory in the PDL source tree.
+Go into the project's linker settings and add to the includepath the `drivers/gpio` directory in the PDL source tree.
 
 ## Problem 
 When loading to the board no 'Algorith for RAM' specified and the CMSIS-DAP fails to load the code on.
 
 ## Solution 
-In target options > debugger make sure that CMSIS-DAP is selected. In it's settings make sure the 32kb algorithm for '0x1FFD0000 - 0x1FFD0DDF' (0x670 long) is selected.
-Start of the RAM for Algorithm is '0x2003C00' size = '0x1000'. 
+In target options > debugger make sure that CMSIS-DAP is selected. In it's settings make sure the 32kb algorithm for `0x1FFD0000 - 0x1FFD0DDF` (0x670 long) is selected.
+Start of the RAM for Algorithm is `0x2003C00` size = `0x1000`. 
 
 I WILL INVESTIGATE THIS AND THE MEMORY MAP AT A LATER POINT.
 
