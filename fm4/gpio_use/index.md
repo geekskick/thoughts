@@ -46,6 +46,7 @@ I can confirm this using the PDL device file `s6e2ccxj.h` which says on line 687
 ## PDL Abstraction
 
 Finding my way through the PDL library was surprisingly easy using tools like Sublime which show where something is defined.
+
 <img src="subl.png">
 
 And it means that by defining in my `mcu.h` file the location of the devices' memory map (`s6e2ccxj.h`) and the devices' IO (`gpio_s6e2ccxj.h`) it will automatically complete macros and insert memory locations without me having to know them in the user code. 
@@ -69,5 +70,7 @@ And the PDL layers handle all the setup and using macros to get the memory locat
 
 ### Resources:
 https://spin.atomicobject.com/2013/02/08/bit-banding/
+
 http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dai0179b/CHDJHIDF.html
+
 http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0439b/Behcjiic.html
