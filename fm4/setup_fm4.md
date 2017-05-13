@@ -16,7 +16,7 @@ First off I downloaded and installed all the drivers and software from the FM4 l
 When I plugged my board in I could see it in Windows device manager on COM4, but not in my Keil project debugger menu which was pretty odd.
 
 <img src="com4.png">
-<img src="nodudfound.png">
+<img src="ndudfound.png">
 
 First I thought I didn't have the right drivers or something, so I did a tonne of googling and trying out different CMSIS-DAP drivers but this was basically a waste of time since nothing worked
 
@@ -96,8 +96,8 @@ Go into the project's linker settings and add to the includepath the 'drivers/gp
 When loading to the board no 'Algorith for RAM' specified and the CMSIS-DAP fails to load the code on.
 
 ## Solution 
-In target options > debugger make sure that CMSIS-DAP is selected. In it's settings make sure the 32kb algorithm for 0x1FFD0000 - 0x1FFD0DDF (0x670 long) is selected.
-Start of the RAM for Algorithm is 0x2003C00 size = 0x1000. 
+In target options > debugger make sure that CMSIS-DAP is selected. In it's settings make sure the 32kb algorithm for '0x1FFD0000 - 0x1FFD0DDF' (0x670 long) is selected.
+Start of the RAM for Algorithm is '0x2003C00' size = '0x1000'. 
 
 I WILL INVESTIGATE THIS AND THE MEMORY MAP AT A LATER POINT.
 
