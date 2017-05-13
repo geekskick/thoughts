@@ -15,7 +15,8 @@ First off I downloaded and installed all the drivers and software from the FM4 l
 
 When I plugged my board in I could see it in Windows device manager on COM4, but not in my Keil project debugger menu which was pretty odd.
 
-PICTURES HERE!
+<img src="com4.png">
+<img src="nodudfound.png">
 
 First I thought I didn't have the right drivers or something, so I did a tonne of googling and trying out different CMSIS-DAP drivers but this was basically a waste of time since nothing worked
 
@@ -42,11 +43,13 @@ All I wanted to do was to turn a light on at the press of a button. This is a go
 
 So I looked at the [board schematics](http://www.cypress.com/file/290921/download) and saw that I have a built in pin called SW2 attached to the devices' Pin128 (P20) 
 
-PICTURE
+<img src="pb.png">
+<img src="pb_pin.png">
 
 and an RGB LED attached to PB2, P1A and P18.
 
-PICTURE
+<img src="led.png">
+<img src="led_pin.png">
 
 I opened the template project in Keil and changed the `../main.c` file to be as follows:
 
