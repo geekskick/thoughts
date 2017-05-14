@@ -37,9 +37,21 @@ On the FM4 dev kit the control register pins are labelled as SOT2_1 and SCK2_1 (
 
 <img src="rc_pins_codec.png">
 
-which on the MCU are associated with Port 3 pins A and B.
+which on the MCU are associated with Port 3 pins A and B
 
 <img src="mcu_rc_pins.png">
+
+According to the FM4 peripheral datasheet the **PFR** register determines whether the pin is being used as GPIO or by a peripheral,
+
+<img src="pfrx.png">
+
+so I would expect that those 2 pins at some point would have a value of 1 written to the the PFR3 register in the relevant bits.
+
+<img src="pfr3_offset.png">
+
+and viola! It does this by using the macro `bFM4_GPIOPRF3_PA = 1u`. *Using what I learned about the bit Band Aliasing (and my [nifty converter](bbaregion.c])) I expect this to translate to `0x42de01a8`, and confirming it using `s6e2ccxj.h` line 69898 it says `#define bFM4_GPIO_PFR3_PA *((volatile  uint8_t *)(0x42DE01A8UL))`*
+
+Then it enables the pin on the peripheral side by using the **E**xtended **P**eripheral **F**unction **R**egister. A quick `ctrl-f` for the function `SOT2_1` quickly finds in the document the EPFR Settings Register 07. This tells me that Bits 19 and 18 need to be set to `b10` to use `SOT2_1`. So the bit 19 needs to be `1` and 18 needs to be `0`.
 
 ### Resources
 * [Codec Datasheet](https://www.rockbox.org/wiki/pub/Main/DataSheets/WM8731_8731L.pdf)

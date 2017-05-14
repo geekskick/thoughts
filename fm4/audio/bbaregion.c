@@ -23,7 +23,7 @@ int main(int argc, const char* argv[])
 	if( argc != COUNT ) { print_usage(); }
 
 	reg_addr port_offset = strtol(argv[REG_OFFS],NULL, 16);
-	int bit = atoi(argv[BIT]);
+	uint8_t bit = strtol(argv[BIT],NULL, 16);
 
 	printf("Port %d:%d alias is 0x%x\n", port_offset, bit, ALIAS_REGION_BASE + (REG_WIDTH * (port_offset+GPIO_OFFSET) )+ ( BIT_OFFET * bit) );
 
