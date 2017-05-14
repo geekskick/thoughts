@@ -65,40 +65,40 @@ N = 50, M = 2, K = 1
 
 It also says to use PLL_CTL2 and PLL_CTL1 to change these values, a quick `ctrl-f` of these quickly gets to page 71 of the same document.
 
->> PLL_CTL1
->> 
->> Bit#7-4 : PLLK[3:0]
->>  - 0 = Division(PLLK) = 1/1 (default)
->>  - 1 = Division(PLLK) = 1/2
->>  - 2 = Division(PLLK) = 1/3
->>  - . . .
->>  - 15 = Division(PLLK) = 1/16
->> 
->>  Bit#3-0 : PLLM[3:0]
->>  - 0 = Division(PLLM) = 1/1 (default)
->>  - 1 = Division(PLLM) = 1/2
->>  - 2 = Division(PLLM) = 1/3
->>  - . . .
->>  - 15 = Division(PLLM) = 1/16
+> PLL_CTL1
+> 
+> Bit#7-4 : PLLK[3:0]
+>  - 0 = Division(PLLK) = 1/1 (default)
+>  - 1 = Division(PLLK) = 1/2
+>  - 2 = Division(PLLK) = 1/3
+>  - . . .
+>  - 15 = Division(PLLK) = 1/16
+> 
+>  Bit#3-0 : PLLM[3:0]
+>  - 0 = Division(PLLM) = 1/1 (default)
+>  - 1 = Division(PLLM) = 1/2
+>  - 2 = Division(PLLM) = 1/3
+>  - . . .
+>  - 15 = Division(PLLM) = 1/16
 
 So I need `0b0000_0001` in `PLL_CTL1`
 
->>  PLL_CTL2
->> 
->>  Bit#7-6 : (reserved)
->> 
->>  Bit#5-0 : PLLN[5:0]
->>  - 0 = Division(PLLN) = 1/1 (default)
->>  - 1 = Division(PLLN) = 1/2
->>  - 2 = Division(PLLN) = 1/3
->>  - . . .
->>  - 63 = Division(PLLN) = 1/64
+>  PLL_CTL2
+> 
+>  Bit#7-6 : (reserved)
+> 
+>  Bit#5-0 : PLLN[5:0]
+>  - 0 = Division(PLLN) = 1/1 (default)
+>  - 1 = Division(PLLN) = 1/2
+>  - 2 = Division(PLLN) = 1/3
+>  - . . .
+>  - 63 = Division(PLLN) = 1/64
 
 And a value of `0bX011_0001` in `PLL_CTL2`
 
 ## Bus Speeds
 
-According to my [Block Diagram on p79] I need to set the internal busses to different speeds! This is achieved using the APBCx_PSR, or APB Clock x Prescaler. Since they use the 200MHz master clock as an input I need to make sure that the prescaler gives the correct output.
+According to my [Block Diagram on p79](http://www.cypress.com/file/235126/download) I need to set the internal busses to different speeds! This is achieved using the APBCx_PSR, or APB Clock x Prescaler. Since they use the 200MHz master clock as an input I need to make sure that the prescaler gives the correct output.
 
 | Bus Number 	| Max Speed |Prescaler  | Register Functions 	| Register Value| Output Speed |
 | --- 			| --- 		| --- 		| --- 					| --- 			| --- |	
@@ -111,3 +111,4 @@ As a result I have the device setup with **200MHz Main Clock, all internal busse
 ### Resources
 
 * [Block Diagram on p79](http://www.cypress.com/file/235126/download)
+* [Peripheral Manual page 47](http://www.cypress.com/file/222996/download)

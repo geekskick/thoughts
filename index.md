@@ -3,7 +3,8 @@
 ### FM4 Development
 1. [Setting Up the Environment](fm4/setup/index.md)
 2. [Using GPIO, in depth](fm4/gpio_use/index.md)
-3. [Using the Audio codec](fm4/audio/index.md)
+3. [Setting up the Clock](fm4/clocks/index.md)
+4. [Using the Audio codec](fm4/audio/index.md)
 
 Resources:
 * [Processor Datasheet](http://www.cypress.com/file/235126/download)

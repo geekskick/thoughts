@@ -26,7 +26,7 @@ And in the datasheet for the codec is says that those pins correspond to how the
 <img src="codec_mode_tbl.png">
 So we are using I2C.
 <img src="codec_csb_tbl.png">
-at address `0x1A`.
+at address `0x1A`
 
 ### I2C Initialise
 The example project doesn't use the PDL, so it manipulates the registers directly - I suppose this prevents a bloated codebase?
@@ -45,13 +45,13 @@ which on the MCU are associated with Port 3 pins A and B
 
 According to the FM4 peripheral datasheet the **PFR** register determines whether the pin is being used as GPIO or by a peripheral,
 
-<img src="pfrx.png">
+<img src="prfx.png">
 
 so I would expect that those 2 pins at some point would have a value of 1 written to the the PFR3 register in the relevant bits.
 
-<img src="pfr3_offset.png">
+<img src="prf3_offset.png">
 
-and viola! It does this by using the macro `bFM4_GPIOPRF3_PA = 1u`. *Using what I learned about the bit Band Aliasing (and my [nifty converter](bbaregion.c])) I expect this to translate to `0x42de01a8`, and confirming it using `s6e2ccxj.h` line 69898 it says `#define bFM4_GPIO_PFR3_PA *((volatile  uint8_t *)(0x42DE01A8UL))`*
+and viola! It does this by using the macro `bFM4_GPIOPRF3_PA = 1u`. *Using what I learned about the bit Band Aliasing (and my [nifty converter](bbaregion.c)) I expect this to translate to `0x42de01a8`, and confirming it using `s6e2ccxj.h` line 69898 it says `#define bFM4_GPIO_PFR3_PA *((volatile  uint8_t *)(0x42DE01A8UL))`*
 
 Then it enables the pin on the peripheral side by using the **E**xtended **P**eripheral **F**unction **R**egister. A quick `ctrl-f` for the function `SOT2_1` quickly finds in the document the EPFR Settings Register 07. This tells me that Bits 19 and 18 need to be set to `b10` to use `SOT2_1`. So the bit 19 needs to be `1` and 18 needs to be `0`.
 
@@ -63,14 +63,14 @@ Another thing to note in the schematics is that the Control lines are pulled up 
 
 If I go back to the contents of the peripherals datasheet a quick scan tell me to go to the section about *Port Pseudo Open Drain Setting Register*. Again, `Port 3` is what the SOT2_1 aka I2C SDA is connected to, so I want to use the Alias Region to set the relevant bit.
 
->> The [example project](example_project) actually uses a generic [`s6e2cc.h`](example_project/s6e2cc.h) header file rather than use the [previously discussed](../gpio_use/index.md) PDL. It uses structs to manipulate the bits directly rather than use the Alias Region
+> The [example project](example_project) actually uses a generic [`s6e2cc.h`](example_project/s6e2cc.h) header file rather than use the [previously discussed](../gpio_use/index.md) PDL. It uses structs to manipulate the bits directly rather than use the Alias Region
 
 ```c
 // In PDL language this would be bFM_GPIO_PZR3_PA = 1u;
 FM4_GPIO->PZR3_f.PA = 1u; // SDA to pseudo open drain
 ```
 
->> Strictly speaking in PDL language I would use the provided `Mfs_I2c_Init` function to abstract all knowledge of the registers away
+> Strictly speaking in PDL language I would use the provided `Mfs_I2c_Init` function to abstract all knowledge of the registers away
 
 Now that my pins to control the Codec are setup:
 * To be used by their peripheral function
