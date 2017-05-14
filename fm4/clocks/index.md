@@ -8,7 +8,7 @@ The clocks on the S6E2CC are really configurable so I thought I'd do some lookin
 * APB0 = 100MHz
 * APB1 = 200MHz
 * APB2 = 100MHz
-* above info from the [Block Diagram on p79]
+* above info from the [Block Diagram on p79](http://www.cypress.com/file/235126/download)
 3. The speed of the crystal soldered to the development kit.
 * The dev kit I have has a 4MHz crystal connected to pins X0 and X1.
 
