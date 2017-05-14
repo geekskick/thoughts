@@ -9,3 +9,4 @@ Resources:
 * [Processor Datasheet](http://www.cypress.com/file/235126/download)
 * [Dev kit schematic](http://www.cypress.com/file/290921/download)
 * [Perihperal Datasheet](http://www.cypress.com/file/222996/download)
+* [Serial Comms Datasheet](http://www.cypress.com/file/222976/download)
