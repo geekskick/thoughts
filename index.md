@@ -4,3 +4,8 @@
 1. [Setting Up the Environment](fm4/setup/index.md)
 2. [Using GPIO, in depth](fm4/gpio_use/index.md)
 3. [Using the Audio codec](fm4/audio/index.md)
+
+Resources:
+* [Processor Datasheet](http://www.cypress.com/file/235126/download)
+* [Dev kit schematic](http://www.cypress.com/file/290921/download)
+* [Perihperal Datasheet](http://www.cypress.com/file/222996/download)
