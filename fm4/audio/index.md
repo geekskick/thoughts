@@ -132,6 +132,7 @@ At this point I also need to tell the I2C device that it's the master. This is d
 9. Set the Sample Frequency
 10. Activate the digital interface!
 
+__*FINISH THIS*__
 
 ### Resources
 * [Codec Datasheet](https://www.rockbox.org/wiki/pub/Main/DataSheets/WM8731_8731L.pdf)
