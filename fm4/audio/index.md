@@ -81,11 +81,34 @@ I can actually configue the communications protocol settings.
 
 #### MFS Setup
 
-As shown in [this bit](../clocks/index.md) the clock to the MFS device is 100MHz. The codec datasheet says that the SCLK value should be 400kHz, aka [full speed I2C](https://www.i2c-bus.org/speed/).
+##### Mode Selection
+
+The FM4's MFS has to be told what protocol it's using which is done by the Serial Mode Register `SMR`. In the [comms datasheet](http://www.cypress.com/file/222976/download) it says the bits 7:5 need to be `100` to enable I2C. I also know that I'm not going to need any Interrupts on Tx or Rx, since there is only one slave, and the communications is only on setup of the codec. 
+
+`SMR = 0b1000000 = 0x80`
+
+##### Clock Selection
+
+As shown in [this bit](../clocks/index.md) the clock to the MFS device is 100MHz. The codec datasheet says that the SCLK value should be 400kHz, aka [full speed I2C](https://www.i2c-bus.org/speed/), along with the fact that it's the slave on the bus. 
 
 <img src="ctrl_speed.png">
 
-**_FINISH THIS BIT_**
+As the codec is the slave, then the FM4 is the master so it must generate SCK. Fortunately the [comms datasheet](http://www.cypress.com/file/222976/download) has Table 3-1 which tells me which value to use in the I2C **Dedicated Baud Rate Generator** and that is `249`.
+
+This is split across 2 registrs `BGR1` and `BGR0`. 
+
+```
+// Also sets the Baud Rate Generator Clock to be the 100MHz one from the APB2 bus
+BGR1 = 0x00;
+BGR0 = 0xF9;
+```
+
+At this point I also need to tell the I2C device that it's the master. This is done in the I2C Bus Control Register `IBCR` bits 15 and 14. I also want to disable all the other interrupts while I'm in this register.
+
+`IBCR = 0b10000000`
+
+> The [example](example_project/i2c.c) also sets the MFS Reset Bit after this setup. But I can't find anything in the [comms datasheet](http://www.cypress.com/file/222976/download) to support this yet.
+
 
 ### Resources
 * [Codec Datasheet](https://www.rockbox.org/wiki/pub/Main/DataSheets/WM8731_8731L.pdf)
