@@ -79,15 +79,15 @@ Now that my pins to control the Codec are setup:
 
 I can actually configue the communications protocol settings.
 
-#### MFS Setup
+### MFS Setup
 
-##### Mode Selection
+#### Mode Selection
 
 The FM4's MFS has to be told what protocol it's using which is done by the Serial Mode Register `SMR`. In the [comms datasheet](http://www.cypress.com/file/222976/download) it says the bits 7:5 need to be `100` to enable I2C. I also know that I'm not going to need any Interrupts on Tx or Rx, since there is only one slave, and the communications is only on setup of the codec. 
 
 `SMR = 0b1000000 = 0x80`
 
-##### Clock Selection
+#### Clock Selection
 
 As shown in [this bit](../clocks/index.md) the clock to the MFS device is 100MHz. The codec datasheet says that the SCLK value should be 400kHz, aka [full speed I2C](https://www.i2c-bus.org/speed/), along with the fact that it's the slave on the bus. 
 
@@ -108,6 +108,29 @@ At this point I also need to tell the I2C device that it's the master. This is d
 `IBCR = 0b10000000`
 
 > The [example](example_project/i2c.c) also sets the MFS Reset Bit after this setup. But I can't find anything in the [comms datasheet](http://www.cypress.com/file/222976/download) to support this yet.
+
+### Codec Settings
+
+[The codec datasheet](https://www.rockbox.org/wiki/pub/Main/DataSheets/WM8731_8731L.pdf) has a list of the control registers. 
+> Interestingly the [example project initialisation](example_project/audio.c) for the codec doesn't match to this, at least in the comments. The process below is as per the datasheet and values written rather than the comments.
+
+#### Setup Process
+
+1. Reset the Codec
+2. Set L and R lines to `mute disabled` `+3db gain` `simultaenous load disabled`
+3. Set L and R volumes to `-10dB`
+4. Set the ADC to get it's input from either MIC or Line In
+5. Set the Line Out/Headphones to come from the DAC
+6. Turn off all the internal filters and make sure nothing is muted
+7. Make sure no power saving features are turned on
+8. Configure the Digital Interface
+* Set up the Digital output to DSP mode
+* Set up the Digital output to 16 bits
+* Ensure that Left = Left and Right = Right
+* Set the codec to generate the clocking signals etc
+* Use the first clock signal after the rising edge on the DACLRC line
+9. Set the Sample Frequency
+10. Activate the digital interface!
 
 
 ### Resources
