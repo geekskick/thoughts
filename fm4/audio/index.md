@@ -26,11 +26,19 @@ Well if we examine the datasheet codec it tells us in the *Software Control Inte
 And in the datasheet for the codec is says that those pins correspond to how the control registers are written to, I2C vs SPI and it's address.
 
 <img src="codec_mode_tbl.png">
+
 So we are using I2C.
+
 <img src="codec_csb_tbl.png">
+
 at address `0x1A`
 
 ### I2C Initialise
+
+In order to communicate using I2C the FM4's MFS peripheral is used. Which can talk using loads of different protocols and we need to set it up correctly.
+
+<img src="block_i2c.png">
+
 The example project doesn't use the PDL, so it manipulates the registers directly - I suppose this prevents a bloated codebase?
 
 With any microcontroller the first thing I would expect to happen in an intialisation routine is for the pins to be correctly set up - In/Out/PullUp/PullDown ...
