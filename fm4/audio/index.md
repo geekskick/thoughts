@@ -37,7 +37,7 @@ at address `0x1A`
 
 In order to communicate using I2C the FM4's MFS peripheral is used. Which can talk using loads of different protocols and we need to set it up correctly.
 
-<img src="block_i2c.png">
+<img src="block_mfs.png">
 
 The example project doesn't use the PDL, so it manipulates the registers directly - I suppose this prevents a bloated codebase?
 
