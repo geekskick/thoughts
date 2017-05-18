@@ -134,6 +134,20 @@ At this point I also need to tell the I2C device that it's the master. This is d
 
 There are a lot of settings! But once I got more familiar with the datasheet for the codec they made sense. The L and R channels have to be told how loud to be (steps 2 and 3), then you have to tell it where to get it's input (step 4) and where to get the output from (step 5). You also need to tell it which of the filters you want it to use (step 6) and then tell it how it's going to send it's output data (step 8).
 
+> ```c
+> Codec_WriteRegister ( WM8731_RESET, 0x00);   			
+> Codec_WriteRegister ( WM8731_LLINEIN, 0x19); 			
+> Codec_WriteRegister ( WM8731_RLINEIN, 0x19); 			
+> Codec_WriteRegister ( WM8731_LHEADOUT, 0x6F);			
+> Codec_WriteRegister ( WM8731_RHEADOUT, 0x6F);			
+> Codec_WriteRegister ( WM8731_ANALOG, audio_input); 		
+> Codec_WriteRegister ( WM8731_DIGITAL, 0x00); 			
+> Codec_WriteRegister ( WM8731_POWERDOWN, 0x00); 			
+> Codec_WriteRegister ( WM8731_INTERFACE, 0x53); 			
+> Codec_WriteRegister ( WM8731_SAMPLING, sampling_rate);
+> Codec_WriteRegister ( WM8731_CONTROL, 0x01); 	
+> ```		
+
 In the diagram below the output side of the codec is ignored.
 
 <img src="codec_block.jpg">
@@ -152,8 +166,43 @@ Lets recap that - 64 bits of data need to be sent per sample of the input signal
 
 In the FM4 the word size is 32 bits so it's actually pretty convenient to only get 32 bits from the ADC in total. `32/2 = 16 bits per channel`. This **doesn't change the speed of `BCLK`**, and the remainging 32 bits on the are packed with `0`s.
 
+### I2S FM4 Peripheral Setup
 
-__*FINISH THIS*__
+Now that the control interface to the codec, and the codec's I2S settings are sorted we need to sort out the FM4. The bit what receives the data from the codec.
+
+If I consult the schematic I can see that the I2S pins are connected to something called `I2SCK_0 I2SDO_0 I2SDI_0 I2SWS_0` so my guess is that it's the I2S peripheral number 0.
+
+<img src="i2s_pins.png">
+
+| Function | Pin | Port/Pin |
+| ---| --- | --- |
+| I2SDO | 42 | 5:E |
+| I2SWS | 43 | 5:F |
+| I2SMCLK | 41 | 5D |
+|I2S DI | 24 | 3:0 |
+| I2SCK | 25 | 3:1 |
+
+And in the [serial datasheet](http://www.cypress.com/file/222976/download) and the [peripheral datahsheet](http://www.cypress.com/file/222996/download) a `ctrl-f` for `I2SDO0` yields some results. 
+
+In the same way as setting up the I2C above the [i2s setup](example_project/i2s.c) sets those pins to use their peripheral function, and then enabled that peripheral function as well using the **PFR** and **EPFR** registers.
+
+> ```c
+> // Pin configuration
+> FM4_GPIO->EPFR24 |= (1ul << 2ul);    // I2S0-MCLK pin to input
+> bFM4_GPIO_PFR5_PD = 1u;
+>
+> FM4_GPIO->EPFR24 |= (1ul << 10ul);   // I2S0-DO pin to output
+> bFM4_GPIO_PFR5_PE = 1u;
+>	
+> FM4_GPIO->EPFR24 |= (1ul << 8ul);    // I2S0-DI pin to input   
+> bFM4_GPIO_PFR5_PE = 1u;
+>
+> FM4_GPIO->EPFR24 |= (1ul << 4ul);    // I2S0-CK pin to input/output (input used)
+> bFM4_GPIO_PFR3_P1 = 1u;
+>
+> FM4_GPIO->EPFR24 |= (1ul << 6ul);    // I2S0-WS pin to input/output (input used)
+> bFM4_GPIO_PFR5_PF = 1u;
+> ```
 
 ### Resources
 * [DSP Mode](http://www.nxp.com/assets/documents/data/en/application-notes/AN3664.pdf)
