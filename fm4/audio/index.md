@@ -208,9 +208,11 @@ In the same way as setting up the I2C above the [i2s setup](example_project/i2s.
 > bFM4_GPIO_PFR5_PF = 1u;
 > ```
 
-#### MFS Setup
+#### I2S Setup
 
-Now that the pins are setup for the peripheral the actual peripheral itself needs to be setup, to match those settings we sent to the codec above. Going through the example project.
+Now that the pins are setup for the peripheral the actual peripheral itself needs to be setup, to match those settings we sent to the codec above. Going through the example project. Since the MFS is being used already we will be using the I2C dedicated peripheral.
+
+<img src="block_i2s.png">
 
 The first setting is to turn off the I2S clock - remember how the codec is providing the clock. Again, searching through the datasheet for the serial comms the _I2S Clock Control Register_ comes up, and in it bit 0 `I2SEN` controls this.
 
@@ -218,7 +220,13 @@ The first setting is to turn off the I2S clock - remember how the codec is provi
 
 I used used my calculator to check that the memory location which `bFM4_I2SPRE_ICCR_ICEN` points to is this bit - it is `0x427A0000`.
 
+While configuring the I2S stop all the Tx and Rx operations using the `OPREG` or _Operation Control Register_ detailed in Chapter7-2 section 6.7 of the communications datasheet.
 
+> ```c FM4_I2S0->OPRREG_f.START = 0u;       // Stops the I2S interface while configuring. ```
+
+The next thing is that the since the codec is providing out `MCLK` we need to set the FM4's I2S `MCLK` source to the correct frequency using the I2S `CNTREG` (Control register not Cunt register!) `CKRT` bits.
+
+> ```c FM4_I2S0->CNTREG_f.CKRT  = 0u;       // 0: Bypass: Use Wolfson clock ```
 ### Resources
 * [DSP Mode](http://www.nxp.com/assets/documents/data/en/application-notes/AN3664.pdf)
 * [Codec Datasheet](https://www.rockbox.org/wiki/pub/Main/DataSheets/WM8731_8731L.pdf)
