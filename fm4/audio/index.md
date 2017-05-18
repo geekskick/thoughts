@@ -132,7 +132,29 @@ At this point I also need to tell the I2C device that it's the master. This is d
 9. Set the Sample Frequency
 10. Activate the digital interface!
 
+There are a lot of settings! But once I got more familiar with the datasheet for the codec they made sense. The L and R channels have to be told how loud to be (steps 2 and 3), then you have to tell it where to get it's input (step 4) and where to get the output from (step 5). You also need to tell it which of the filters you want it to use (step 6) and then tell it how it's going to send it's output data (step 8).
+
+In the diagram below the output side of the codec is ignored.
+
+<img src="codec_block.jpg">
+
+#### I2S Communication Mode 
+
+The mode setup above is pretty interesting - it means that it'll take the input signal and output, via a serial connection, the audio data.
+
+In DSP mode the codec can output 32bits per channel, per sample! So if a sample happened every 32 seconds, a bit would be sent to the FM4 every half a second (because there is a Left and a Right channel) `32 seconds / 64 bits = 1/2`. The start of each set of 64 bits is signaled by a pulse on the `LRCLK` line. And a bit is read by the FM4 on every rising edge of the `BLCK` line.
+
+<img src="dsp_comms.png">
+
+Lets recap that - 64 bits of data need to be sent per sample of the input signal. So it follows that the BLCK needs to be 64 times the frequency of the sample rate. This is confirmed by the datasheet p35 which says that
+
+> In Master mode, DACLRC and ADCLRC will be output with a 50:50 mark-space ratio with BCLK output at 64 x base frequency (i.e. 48 kHz).
+
+In the FM4 the word size is 32 bits so it's actually pretty convenient to only get 32 bits from the ADC in total. `32/2 = 16 bits per channel`. This **doesn't change the speed of `BCLK`**, and the remainging 32 bits on the are packed with `0`s.
+
+
 __*FINISH THIS*__
 
 ### Resources
+* [DSP Mode](http://www.nxp.com/assets/documents/data/en/application-notes/AN3664.pdf)
 * [Codec Datasheet](https://www.rockbox.org/wiki/pub/Main/DataSheets/WM8731_8731L.pdf)
