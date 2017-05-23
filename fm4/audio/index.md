@@ -232,9 +232,20 @@ While configuring the I2S stop all the Tx and Rx operations using the `OPREG` or
 
 > ```c FM4_I2S0->OPRREG_f.START = 0u;       // Stops the I2S interface while configuring. ```
 
-The next thing is that the since the codec is providing out `MCLK` we need to set the FM4's I2S `MCLK` source to the correct frequency using the I2S `CNTREG` (Control register not Cunt register!) `CKRT` bits.
+The next thing is that the since the codec is providing our `MCLK` we need to set the FM4's I2S `MCLK` source to the correct frequency using the I2S `CNTREG` (Control register not Cunt register!) `CKRT` bits.
 
 > ```c FM4_I2S0->CNTREG_f.CKRT  = 0u;       // 0: Bypass: Use Wolfson clock ```
+
+The example project also then uses the OVHD bits of the I2S control register to set the amount of padding in the sent data to from the FM4 to the codec. The values here dont match up with the datasheet's description, and I believe theey are __incorrect__. I believe that no matter the sample rate the amount of padding should be 32 bits. Please, if someone knows more please correct me.
+
+> ```c
+> //Overhead bits
+>   if (sampling_rate == hz8000) FM4_I2S0->CNTREG_f.OVHD  = 352;     
+>   if (sampling_rate == hz32000) FM4_I2S0->CNTREG_f.OVHD  = 64;     
+>   if (sampling_rate == hz48000) FM4_I2S0->CNTREG_f.OVHD  = 32;     
+>   if (sampling_rate == hz96000) FM4_I2S0->CNTREG_f.OVHD  = 0;  
+> ```
+
 ### Resources
 * [DSP Mode](http://www.nxp.com/assets/documents/data/en/application-notes/AN3664.pdf)
 * [Codec Datasheet](https://www.rockbox.org/wiki/pub/Main/DataSheets/WM8731_8731L.pdf)
