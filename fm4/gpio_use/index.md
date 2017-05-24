@@ -19,17 +19,19 @@ temp |= 0x01 << BIT_NUM;
 //Put it back
 TARGET_REGISTER = temp;
 ```
-which is of course a pain in the arse - not only is it lots of extra lines of code it will slow the execution down. So a Bit Bang Aliasing Region is given, according to the device memory map between addresses `0x4200_0000` and `0x4400_0000`. This does some clever stuff with the system control logic which means that the LSB of each word maps to a bit in the peripheral device region. 
+which is of course a pain in the arse - not only is it lots of extra lines of code it will slow the execution down. So a Bit Band Aliasing Region is given, according to the device memory map between addresses `0x4200_0000` and `0x4400_0000`. This does some clever stuff with the system control logic which means that the LSB of each word maps to a bit in the peripheral device region. 
 
 This is also a direct mapping, so the first LSB will map to the first bit of the first register in the peripheral region. 
 <img src="bit_mapping.png">
 
 This means that we can calculate the correct memory address to use by doing:
+
 ```
 alias_region_base_addr + (word_width * offset_into_peripheral_region) + ((word_width/8) * bit) = alias_region_address_to_use
 ```
 
 Using values from the FM4 to use the GPIO_PCRB register bit 2 (controlling the state of the GPIO Pull Ups on PortB, Bit 2)
+
 ```
 alias_region_base_addr = 0x4200_0000
 word_width = 32 
@@ -54,13 +56,16 @@ And it means that by defining in my `mcu.h` file the location of the devices' me
 <img src="pdl.jpg" width="1000">
 
 This means that rather than having to code something like
+
 ```c
 // set the bit in the Port B pin 2 pup register
 0x42DE2588 = 1; 
 
 //other init ...
+
 ```
 I can simply call:
+
 ```c
 Gpio1pin_InitOut(GPIO1PIN_PB2, 1);
 ```
