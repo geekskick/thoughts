@@ -200,6 +200,12 @@ The line of code in the example project sets it up as 32 bits.
 
 ### I2S FM4 Peripheral Setup
 
+The important thing to remember is to enable the clock to the peripheral before trying to use it. This is the same in many micro controllers. The example project uses
+
+> `bFM4_CLK_GATING_CKEN2_I2SCK0 = 1u;`
+
+however the PDL also provides the `I2s_StartClk()` function.
+
 #### Pins
 
 Now that the control interface to the codec, and the codec's I2S settings are sorted we need to sort out the FM4. The bit what receives the data from the codec.
@@ -281,6 +287,68 @@ Therefore:
 >   if (sampling_rate == hz48000) FM4_I2S0->CNTREG_f.OVHD  = 32;     
 >   if (sampling_rate == hz96000) FM4_I2S0->CNTREG_f.OVHD  = 0;  
 > ```
+
+The next chunk of code is fairly self explainatory - refer to p881 onwards of the [datasheet](http://www.cypress.com/file/222976/download) and it sets up the following configuration:
+* In the case of no data in the Transmit buffer send `0s`
+* The FM is the slave.
+* There is only one subframe
+* Split the contents of the transmit buffer into two separate 16 bits rather than one long 32 bit word. 
+* On recieve combine the 16bit left anf 16bit right channels into one 32 bit register
+* set master mode clock to use internal clock source (not used)
+* Fill any remaing space in the recieved data register with 0's (not used)
+* Don't just send data unless I say
+* Send the MSB first
+* Sample the serial data in the middle
+* Use the rising edge of `BCLK` to trigger a read of the serial data
+* LRCLK pulse happens at the same time as sending the first bit
+* The `LRCLK` will be high for the whole of the left channel **I believe this is in error further tinkering required**
+* The `LRCLK` is active high aka 1 means 1
+
+> ```c
+> FM4_I2S0->CNTREG_f.MSKB  = FALSE ;   // No mask bit
+>   // Master - Slave configuration 
+>   FM4_I2S0->CNTREG_f.MSMD  = FALSE ;   // Slave mode
+>   // Number of Subframe constructions
+>   FM4_I2S0->CNTREG_f.SBFN  =  FALSE ;  // 1 Subframe ; 2 channels on the same subframe. 
+> 	// Word construction of FIFO 
+>   FM4_I2S0->CNTREG_f.RHLL  = TRUE ;    // two 16 channels combined into a 32-bit FIFO word    
+> 	//Base clock divider (in master mode)
+> 	FM4_I2S0->CNTREG_f.ECKM = FALSE;
+>   // Bit extension
+>   FM4_I2S0->CNTREG_f.BEXT  = FALSE ;   // Bit extension not used
+>   // Output Mode of Frame Synchronous Signal
+>   FM4_I2S0->CNTREG_f.FRUN  = FALSE;    // Don't start free running
+>   // Shifting order
+>   FM4_I2S0->CNTREG_f.MLSB  = FALSE;    // Shift starts from MSB of word 
+>   // Sampling point of data reception
+>   FM4_I2S0->CNTREG_f.SMPL  = FALSE;    // Sampling is performed in the middle of the receive data.
+>   // Clock polarity
+>   FM4_I2S0->CNTREG_f.CPOL  = TRUE;     // Drives data at the falling edge of I2SCK and is sampled at the rising > edge of I2SCK. 
+>   // Frame Sync Phase
+>   FM4_I2S0->CNTREG_f.FSPH  = FALSE;    // I2SWS is enabled at the same time as the frame data and first bit. 
+>   // Frame Sync Pulse Width
+>   FM4_I2S0->CNTREG_f.FSLN  = TRUE;     // Pulse width will be one channel length (1 channel).
+>   // Frame Sync Polarity
+>   FM4_I2S0->CNTREG_f.FSPL  = FALSE;    // I2SWS is "1", and the frame sync signal is enabled. This is "0" when > idle.
+> ```
+
+
+Since the FM4 can have lots of information sent over I2S each individual frame and sub frame has to be specified. This is setup as follows:
+* 2 channels (left and right)
+* Each channel has 16 bits
+* The 16 bits from 1 word which is 16 bits long
+* enable channels 1 and 2
+
+> ```c
+>// Configuration for Sub Frame 0
+>  FM4_I2S0->MCR0REG_f.S0CHN  =  1u ;   //Number of channels -1 for subfram_0 (two channels)
+>  FM4_I2S0->MCR0REG_f.S0CHL  =  15u;   //Bit length -1 of the channels that make up subframe 0 (32bit)
+>  FM4_I2S0->MCR0REG_f.S0WDL  =  15u;   //Word length - 1.
+>
+> // Set active channels for Sub Frame 0   
+>  FM4_I2S0->MCR1REG  = 0x00000003u;    // Enable channel 0 and 1 in subframe 0
+> ```
+
 
 ### Resources
 * [DSP Mode](http://www.nxp.com/assets/documents/data/en/application-notes/AN3664.pdf)
