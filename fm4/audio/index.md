@@ -170,11 +170,33 @@ In DSP mode the codec can output 32bits per channel, per sample! So if a sample 
 
 <img src="dsp_comms.png">
 
-Lets recap that - 64 bits of data need to be sent per sample of the input signal. So it follows that the BLCK needs to be 64 times the frequency of the sample rate. This is confirmed by the datasheet p35 which says that
+Lets recap that - 64 bits of data need to be sent per sample of the input signal. As each databit is clocked into the FM4 on a rising edge on the `BCLK` line we need to be aware of the `BCLK` rate/frequency. The [codec Datasheet](https://www.rockbox.org/wiki/pub/Main/DataSheets/WM8731_8731L.pdf) says that
 
 > In Master mode, DACLRC and ADCLRC will be output with a 50:50 mark-space ratio with BCLK output at 64 x base frequency (i.e. 48 kHz).
 
-In the FM4 the word size is 32 bits so it's actually pretty convenient to only get 32 bits from the ADC in total. `32/2 = 16 bits per channel`. This **doesn't change the speed of `BCLK`**, and the remainging 32 bits on the are packed with `0`s.
+It follows that the `BCLK` freq is 
+
+```
+48kHz x 64 = 3072kHz = 3.072MHz
+```
+
+which means that: 
+
+| BCLK Freq | Sample Rate | Number of BCLK pulses per LRCLK pulse |
+| ---  | --- | --- |
+| 3072e3 | 96e3 | 3072 / 96 = 32 |
+| 3072e3 | 48e3 | 3072 / 48 = 64 |
+|3072e3 | 32e3 | 3072 / 32 = 96 |
+|3072e3 | 8e3 | 3072 / 8 = 384 |
+
+In the table the maximum number of bits which can be sent for every sample rate is 32, when the sample rate is 96kHz. In the FM4 the word size is 32 bits so it's actually pretty convenient to only get 32 bits from the ADC in total. In cases where the sample rate is different, the leftover bits after the 32 are packed with zeros.
+
+<img src="comms_dwg.jpg">
+
+The line of code in the example project sets it up as 32 bits.
+
+> `Codec_WriteRegister ( WM8731_INTERFACE, 0x53);`
+
 
 ### I2S FM4 Peripheral Setup
 
@@ -236,7 +258,21 @@ The next thing is that the since the codec is providing our `MCLK` we need to se
 
 > ```c FM4_I2S0->CNTREG_f.CKRT  = 0u;       // 0: Bypass: Use Wolfson clock ```
 
-The example project also then uses the OVHD bits of the I2S control register to set the amount of padding in the sent data to from the FM4 to the codec. The values here dont match up with the datasheet's description, and I believe theey are __incorrect__. I believe that no matter the sample rate the amount of padding should be 32 bits. Please, if someone knows more please correct me.
+The example project also then uses the OVHD bits of the I2S control register to set the amount of padding in the sent data to from the FM4 to the codec. This is basically the number of spare `BCLK` pulses per sample. Remember above when the communication mode was set to 32bits using this line of code?
+
+> `Codec_WriteRegister ( WM8731_INTERFACE, 0x53);`
+
+Using the formula `( BCLK_freq / sample_rate ) - number_of_bits_per_sample` we can get the number of padded `0's`
+
+```
+BCLK_freq = 3072e3. number_of_bits_per_sample = 32.
+(3072e3 / 96e3) - 32  = 0
+(3072e3 / 48e3) - 32  = 32
+(3072e3 / 32e3) - 32  = 64
+(3072e3 / 8e3) - 32  = 352
+```
+
+Therefore: 
 
 > ```c
 > //Overhead bits
