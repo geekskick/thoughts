@@ -38,7 +38,7 @@ at address `0x1A`
 [The I2C Interface is setup](MFS-I2C_Setup.md) to control the codec.
 
 ### Codec Settings
-The MFS peripheral is used to perform the [codec setup](codec_setup.md)
+The MFS peripheral is used to perform the [codec settings and I2S communications](codec_setup.md)
 
 ### I2S FM4 Peripheral Setup
 [The I2S Peripheral Setup is detailed here](i2S_Peripheral_Setup.md)

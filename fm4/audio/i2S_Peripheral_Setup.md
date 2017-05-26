@@ -63,7 +63,7 @@ The next thing is that the since the codec is providing our `MCLK` we need to se
 
 > ```c FM4_I2S0->CNTREG_f.CKRT  = 0u;       // 0: Bypass: Use Wolfson clock ```
 
-The example project also then uses the OVHD bits of the I2S control register to set the amount of padding in the sent data to from the FM4 to the codec. This is basically the number of spare `BCLK` pulses per sample. Remember above when the communication mode was set to 32bits using this line of code?
+The example project also then uses the OVHD bits of the I2S control register to set the amount of padding in the sent data to from the FM4 to the codec. This is basically the number of spare `BCLK` pulses per sample. Remember above when the [communication mode was set to 32bits](codec_setup.md) using this line of code?
 
 > `Codec_WriteRegister ( WM8731_INTERFACE, 0x53);`
 

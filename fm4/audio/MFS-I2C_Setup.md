@@ -1,4 +1,4 @@
-#MFS-I2C Setup
+# MFS-I2C Setup
 
 ## I2C Initialise
 
@@ -85,3 +85,7 @@ At this point I also need to tell the I2C device that it's the master. This is d
 `IBCR = 0b10000000`
 
 > The [example](example_project/i2c.c) also sets the MFS Reset Bit after this setup. But I can't find anything in the [comms datasheet](http://www.cypress.com/file/222976/download) to support this yet.
+
+### Resources
+* [DSP Mode](http://www.nxp.com/assets/documents/data/en/application-notes/AN3664.pdf)
+* [Codec Datasheet](https://www.rockbox.org/wiki/pub/Main/DataSheets/WM8731_8731L.pdf)
