@@ -215,3 +215,51 @@ void dungeon_t::create_exit( void )
 ```
 
 ## Game Loop
+
+The main game loop is something like this:
+1. Get user input
+2. Try to move the player
+3. Check for escape found
+4. Show the new dungeon
+
+```c++
+		char inp;
+		std::cin >> inp;
+
+		while(inp != 'q')
+		{
+			switch(inp)
+			{
+				case 'a': //left
+					p1.position().set_x(p1.get_x() - 1);
+					break;
+				case 's': //down
+					p1.position().set_y(p1.get_y() + 1);
+					break;
+				case 'd': //right
+					p1.position().set_x(p1.get_x() + 1);
+					break;
+				case 'w': //up
+					p1.position().set_y(p1.get_y() - 1);
+					break;
+				default:
+					break;
+			}
+			p1.position() = dung.update_player_position(p1.position());
+
+			if( dung.player_has_found_exit() )
+			{
+				std::cout << "ESCAPE!" << std::endl;
+				break;
+			}
+			dung.show();
+
+			std::cin >> inp;
+		}
+	
+```
+
+# Things To Improve
+* It'd be awesome to have a better GUI
+* I haven't used it enough to find the bugs during use
+* Have a different way of joining the rooms together
