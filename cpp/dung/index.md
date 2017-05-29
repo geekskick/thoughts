@@ -162,7 +162,7 @@ Then this is converted (using values found from trial and error) into an angle w
 
 Then finally turned into a direction.
 
-<img src="relangle.jpg">.
+<img src="rel_angle.jpg">.
 
 #### Drawing Corridors
 
