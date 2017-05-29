@@ -12,7 +12,7 @@ The first thing I did was decide on some requirements for my application
 
 I sort of envisioned something like this.
 
-<ing src="initial_thoughts.jpg">
+<img src="initial_thoughts.jpg">
 
 ## Dungeon
 
