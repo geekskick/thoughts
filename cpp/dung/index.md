@@ -214,6 +214,14 @@ void dungeon_t::create_exit( void )
 }
 ```
 
+### Example Dungeons
+
+<img src="dung1.png">
+
+<img src="dung2.png">
+
+<img src="dung3.png">
+
 ## Game Loop
 
 The main game loop is something like this:
