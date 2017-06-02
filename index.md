@@ -14,3 +14,4 @@ Resources:
 
 ### Misc Stuff
 * [Procedural Dungeon Generation](cpp/dung/index.md)
+* [Fixing Serial Communications](misc/comms_investigation/index.md)
