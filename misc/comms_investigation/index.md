@@ -4,7 +4,7 @@
 
 > The events described here actually took place over a couple of days, and involved lots of head scratching and cups of tea! Also, I was doing lots of debugging with another engineer, so I can't take all the credit - I have described this all here as if I did it all, but it was an even split of workload between us to get this fixed.
 
-At work I am integrating some equipment, and the jist of it is that I have some __T__est __E__quipment that I need to talk to a __U__nit __U__nder __T__est.
+At work I am integrating some equipment, and the jist of it is that I have some __T__ est __E__ quipment that I need to talk to a __U__ nit __U__ nder __T__ est.
 
 <img src="overview_blck.jpg">
 
@@ -54,7 +54,7 @@ The next thing I wanted to do was to split the system down a bit to see where ab
 
 Using this I could see that the messages to and from the UUT were as expected! *Weird huh?!*
 
-<img src="scope_blk1.jpg">
+<img src="scope_blck1.jpg">
 
 At the moment there were still a fair amount of components (layers?!) in this setup.
 
