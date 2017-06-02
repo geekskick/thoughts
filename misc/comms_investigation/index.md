@@ -248,7 +248,7 @@ enum { BIT_A = 8, BIT_B = 7 ... etc ... };
 bool response_t::is_bit_f_from_yyy_set()
 {
 	char rc = get_yyy();
-	return (rc & (0x01 << BIT_F)) > 1;
+	return (rc & (0x01 << BIT_F)) > 0;
 }
 ```
 
@@ -282,7 +282,7 @@ bool response_t::is_bit_f_from_yyy_set()
 {
 	char rc = get_yyy();
 	const int shift = BIT_F - 1;
-	return (rc & (0x01 << shift) > 1;
+	return (rc & (0x01 << shift) > 0;
 }
 ```
 Again preserving the match with the documentation, and adding a comment to explain why it's changed and different.
