@@ -9,3 +9,26 @@ It also happens that there is an arduino guide for it [here](http://haneefputtur
 ## First Steps
 <img src="schematic.png">
 The first thing I did was to plug the segment controls into CN7 pins on the dev kit. I also grounded the `d1` cathode. This means that when I set the relevant pins of the FM4 to be `HIGH` output all of the bits of the display will turn on. 
+
+``` c
+
+int main(void)
+{
+ 
+	// All segments on
+    Gpio1pin_InitOut(GPIO1PIN_P16, Gpio1pin_InitVal(1u));
+	Gpio1pin_InitOut(GPIO1PIN_P42, Gpio1pin_InitVal(1u));
+	Gpio1pin_InitOut(GPIO1PIN_P40, Gpio1pin_InitVal(1u));
+	Gpio1pin_InitOut(GPIO1PIN_P41, Gpio1pin_InitVal(1u));
+	Gpio1pin_InitOut(GPIO1PIN_PF0, Gpio1pin_InitVal(1u));
+	Gpio1pin_InitOut(GPIO1PIN_PF1, Gpio1pin_InitVal(1u));
+	Gpio1pin_InitOut(GPIO1PIN_P7D, Gpio1pin_InitVal(1u));
+	
+    
+    while(1)
+    {
+    }
+}
+```
+And my output:
+<img src="all_on.jpg">
