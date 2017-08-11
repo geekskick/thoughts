@@ -5,6 +5,7 @@
 2. [Using GPIO, in depth](fm4/gpio_use/index.md)
 3. [Setting up the Clock](fm4/clocks/index.md)
 4. [Using the Audio codec](fm4/audio/index.md)
+5. [Using a 7 Segment Display](fm4/sevenseg/index.md)
 
 Resources:
 * [Processor Datasheet](http://www.cypress.com/file/235126/download)
