@@ -128,7 +128,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>CMSIS_AGDI</Key>
-          <Name>-X"CMSIS-DAP Spansion V2.5" -O175 -S0 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(4BA00477) -L00(0) -TO18 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD2003C000 -FC1000 -FN5 -FF0S6E2CC_MACRO0_1024KB.FLM -FS00 -FL0100000 -FP0($$Device:S6E2CCAJ0A$Flash\S6E2CC_MACRO0_1024KB.FLM) -FF1S6E2CC_MACRO1_1024KB.FLM -FS1100000 -FL1100000 -FP1($$Device:S6E2CCAJ0A$Flash\S6E2CC_MACRO1_1024KB.FLM) -FF2S6E2CC_MACRO0_8KB.FLM -FS2406000 -FL22000 -FP2($$Device:S6E2CCAJ0A$Flash\S6E2CC_MACRO0_8KB.FLM) -FF3S6E2CC_MACRO1_32KB.FLM -FS3408000 -FL38000 -FP3($$Device:S6E2CCAJ0A$Flash\S6E2CC_MACRO1_32KB.FLM) -FF4S6E2CC_MACRO1_32KB.FLM -FS41FFD0000 -FL4670 -FP4($$Device:S6E2CCAJ0A$Flash\S6E2CC_MACRO1_32KB.FLM)</Name>
+          <Name>-X"CMSIS-DAP Spansion V2.5" -O175 -S0 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(4BA00477) -L00(0) -TO18 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD2003C000 -FC1000 -FN5 -FF0S6E2CC_MACRO0_1024KB.FLM -FS00 -FL0100000 -FP0($$Device:S6E2CCAJ0A$Flash\S6E2CC_MACRO0_1024KB.FLM) -FF1S6E2CC_MACRO1_1024KB.FLM -FS1100000 -FL1100000 -FP1($$Device:S6E2CCAJ0A$Flash\S6E2CC_MACRO1_1024KB.FLM) -FF2S6E2CC_MACRO0_8KB.FLM -FS2406000 -FL22000 -FP2($$Device:S6E2CCAJ0A$Flash\S6E2CC_MACRO0_8KB.FLM) -FF3S6E2CC_MACRO1_32KB.FLM -FS3408000 -FL38000 -FP3($$Device:S6E2CCAJ0A$Flash\S6E2CC_MACRO1_32KB.FLM) -FF4S6E2CC_MACRO1_32KB.FLM -FS41FFD0000 -FL4DE0 -FP4($$Device:S6E2CCAJ0A$Flash\S6E2CC_MACRO1_32KB.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -151,7 +151,24 @@
           <Name>-T0</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint/>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>35</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>536676918</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\main.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\sevenseg\../main.c\35</Expression>
+        </Bp>
+      </Breakpoint>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
@@ -190,7 +207,7 @@
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
-        <aLwin>1</aLwin>
+        <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
@@ -1330,8 +1347,44 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\..\drivers\gpio\gpio.h</PathWithFileName>
-      <FilenameWithoutPath>gpio.h</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\gpio</PathWithFileName>
+      <FilenameWithoutPath>gpio</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>3</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\pdl_user.h</PathWithFileName>
+      <FilenameWithoutPath>pdl_user.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>4</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\dt\dt.c</PathWithFileName>
+      <FilenameWithoutPath>dt.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>5</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\pdl.c</PathWithFileName>
+      <FilenameWithoutPath>pdl.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1345,7 +1398,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>3</FileNumber>
+      <FileNumber>6</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1357,7 +1410,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>4</FileNumber>
+      <FileNumber>7</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>

@@ -48,7 +48,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\output\debug\</OutputDirectory>
-          <OutputName>s6e2ccxj_template</OutputName>
+          <OutputName>sevenseg</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\common;..\..\..\..\..\cmsis\include;..\..\..\..\..\drivers\gpio</IncludePath>
+              <IncludePath>..\..\common;..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\gpio;..\..\..\..\..\..\..\Cypress\PDL\2.1.0\cmsis\include;..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers;..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\dt;..\..\projects</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -453,9 +453,24 @@
               <FilePath>..\..\common\system_s6e2cc.c</FilePath>
             </File>
             <File>
-              <FileName>gpio.h</FileName>
+              <FileName>gpio</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\..\..\..\drivers\gpio\gpio.h</FilePath>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\gpio</FilePath>
+            </File>
+            <File>
+              <FileName>pdl_user.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\pdl_user.h</FilePath>
+            </File>
+            <File>
+              <FileName>dt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\dt\dt.c</FilePath>
+            </File>
+            <File>
+              <FileName>pdl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\pdl.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -855,9 +870,24 @@
               <FilePath>..\..\common\system_s6e2cc.c</FilePath>
             </File>
             <File>
-              <FileName>gpio.h</FileName>
+              <FileName>gpio</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\..\..\..\drivers\gpio\gpio.h</FilePath>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\gpio</FilePath>
+            </File>
+            <File>
+              <FileName>pdl_user.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\pdl_user.h</FilePath>
+            </File>
+            <File>
+              <FileName>dt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\dt\dt.c</FilePath>
+            </File>
+            <File>
+              <FileName>pdl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\pdl.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1255,9 +1285,24 @@
               <FilePath>..\..\common\system_s6e2cc.c</FilePath>
             </File>
             <File>
-              <FileName>gpio.h</FileName>
+              <FileName>gpio</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\..\..\..\drivers\gpio\gpio.h</FilePath>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\gpio</FilePath>
+            </File>
+            <File>
+              <FileName>pdl_user.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\pdl_user.h</FilePath>
+            </File>
+            <File>
+              <FileName>dt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\dt\dt.c</FilePath>
+            </File>
+            <File>
+              <FileName>pdl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\pdl.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1655,9 +1700,24 @@
               <FilePath>..\..\common\system_s6e2cc.c</FilePath>
             </File>
             <File>
-              <FileName>gpio.h</FileName>
+              <FileName>gpio</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\..\..\..\drivers\gpio\gpio.h</FilePath>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\gpio</FilePath>
+            </File>
+            <File>
+              <FileName>pdl_user.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\pdl_user.h</FilePath>
+            </File>
+            <File>
+              <FileName>dt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\dt\dt.c</FilePath>
+            </File>
+            <File>
+              <FileName>pdl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\pdl.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2055,9 +2115,24 @@
               <FilePath>..\..\common\system_s6e2cc.c</FilePath>
             </File>
             <File>
-              <FileName>gpio.h</FileName>
+              <FileName>gpio</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\..\..\..\drivers\gpio\gpio.h</FilePath>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\gpio</FilePath>
+            </File>
+            <File>
+              <FileName>pdl_user.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\pdl_user.h</FilePath>
+            </File>
+            <File>
+              <FileName>dt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\dt\dt.c</FilePath>
+            </File>
+            <File>
+              <FileName>pdl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\pdl.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2455,9 +2530,24 @@
               <FilePath>..\..\common\system_s6e2cc.c</FilePath>
             </File>
             <File>
-              <FileName>gpio.h</FileName>
+              <FileName>gpio</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\..\..\..\drivers\gpio\gpio.h</FilePath>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\gpio</FilePath>
+            </File>
+            <File>
+              <FileName>pdl_user.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\pdl_user.h</FilePath>
+            </File>
+            <File>
+              <FileName>dt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\dt\dt.c</FilePath>
+            </File>
+            <File>
+              <FileName>pdl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\Cypress\PDL\2.1.0\drivers\pdl.c</FilePath>
             </File>
           </Files>
         </Group>
