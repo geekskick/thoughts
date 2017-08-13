@@ -34,8 +34,16 @@ void DT_IRQHandler(void){
 	  static int timer_count = 0;
     Dt_ClrIrqFlag(DtChannel0);    /* Clear Irq */
 		switch(timer_count){
-			case 0: show_one(); timer_count++;   break;
-			case 1: show_two(); timer_count = 0; break;
+			case 0: show_zero(); timer_count++; break;
+			case 1: show_one(); timer_count++; break;
+			case 2: show_two(); timer_count++; break;
+			case 3: show_three(); timer_count++; break;
+			case 4: show_four(); timer_count++; break;
+			case 5: show_five(); timer_count++; break;
+			case 6: show_six(); timer_count++; break;
+			case 7: show_seven(); timer_count++; break;
+			case 8: show_eight(); timer_count++; break;
+			case 9: show_nine(); timer_count = 0; break;
 			default: timer_count = 0; break;
 		}	
 }
@@ -45,7 +53,6 @@ int main(void)
   configure_gpio();
 	configure_timer();
 	Gpio1pin_Put(GPIO1PIN_P1A,  1u);
-	show_two();
 
   while(1);
 }
@@ -84,6 +91,55 @@ void show_two( void ){
 	Gpio1pin_Put( GPIO1PIN_P16, 1u );
 }
 
+void show_three( void ){
+	Gpio1pin_Put( GPIO1PIN_P7D, 1u );
+	Gpio1pin_Put( GPIO1PIN_PF1, 1u );
+	Gpio1pin_Put( GPIO1PIN_PF0, 1u );
+	Gpio1pin_Put( GPIO1PIN_P41, 1u );
+	Gpio1pin_Put( GPIO1PIN_P40, 0u );
+	Gpio1pin_Put( GPIO1PIN_P42, 0u );
+	Gpio1pin_Put( GPIO1PIN_P16, 1u );
+}
+
+void show_four( void ){
+	Gpio1pin_Put( GPIO1PIN_P7D, 0u );
+	Gpio1pin_Put( GPIO1PIN_PF1, 1u );
+	Gpio1pin_Put( GPIO1PIN_PF0, 1u );
+	Gpio1pin_Put( GPIO1PIN_P41, 0u );
+	Gpio1pin_Put( GPIO1PIN_P40, 0u );
+	Gpio1pin_Put( GPIO1PIN_P42, 1u );
+	Gpio1pin_Put( GPIO1PIN_P16, 1u );
+}
+
+void show_five( void ){
+	Gpio1pin_Put( GPIO1PIN_P7D, 1u );
+	Gpio1pin_Put( GPIO1PIN_PF1, 0u );
+	Gpio1pin_Put( GPIO1PIN_PF0, 1u );
+	Gpio1pin_Put( GPIO1PIN_P41, 1u );
+	Gpio1pin_Put( GPIO1PIN_P40, 0u );
+	Gpio1pin_Put( GPIO1PIN_P42, 1u );
+	Gpio1pin_Put( GPIO1PIN_P16, 1u );
+}
+
+void show_six( void ){
+	Gpio1pin_Put( GPIO1PIN_P7D, 1u );
+	Gpio1pin_Put( GPIO1PIN_PF1, 0u );
+	Gpio1pin_Put( GPIO1PIN_PF0, 1u );
+	Gpio1pin_Put( GPIO1PIN_P41, 1u );
+	Gpio1pin_Put( GPIO1PIN_P40, 1u );
+	Gpio1pin_Put( GPIO1PIN_P42, 1u );
+	Gpio1pin_Put( GPIO1PIN_P16, 1u );
+}
+
+void show_seven( void ){
+	Gpio1pin_Put( GPIO1PIN_P7D, 1u );
+	Gpio1pin_Put( GPIO1PIN_PF1, 1u );
+	Gpio1pin_Put( GPIO1PIN_PF0, 1u );
+	Gpio1pin_Put( GPIO1PIN_P41, 0u );
+	Gpio1pin_Put( GPIO1PIN_P40, 0u );
+	Gpio1pin_Put( GPIO1PIN_P42, 0u );
+	Gpio1pin_Put( GPIO1PIN_P16, 0u );
+}
 
 void show_eight( void ){
 	Gpio1pin_Put( GPIO1PIN_P7D, 1u );
@@ -94,28 +150,48 @@ void show_eight( void ){
   Gpio1pin_Put( GPIO1PIN_P42, 1u );
   Gpio1pin_Put( GPIO1PIN_P16, 1u );
 }
+
+void show_nine( void ){
+	Gpio1pin_Put( GPIO1PIN_P7D, 1u );
+	Gpio1pin_Put( GPIO1PIN_PF1, 1u );
+  Gpio1pin_Put( GPIO1PIN_PF0, 1u );
+  Gpio1pin_Put( GPIO1PIN_P41, 1u );
+  Gpio1pin_Put( GPIO1PIN_P40, 0u ); 
+  Gpio1pin_Put( GPIO1PIN_P42, 1u );
+  Gpio1pin_Put( GPIO1PIN_P16, 1u );
+}
+
+void show_zero( void ){
+	Gpio1pin_Put( GPIO1PIN_P7D, 1u );
+	Gpio1pin_Put( GPIO1PIN_PF1, 1u );
+  Gpio1pin_Put( GPIO1PIN_PF0, 1u );
+  Gpio1pin_Put( GPIO1PIN_P41, 1u );
+  Gpio1pin_Put( GPIO1PIN_P40, 1u ); 
+  Gpio1pin_Put( GPIO1PIN_P42, 1u );
+  Gpio1pin_Put( GPIO1PIN_P16, 0u );
+}
+
 void configure_timer( void ){
 	stc_dt_channel_config_t stcDtChannelConfig0;
-  
-	  stcDtChannelConfig0.u8Mode = DtPeriodic;
-    stcDtChannelConfig0.u8PrescalerDiv = DtPrescalerDiv256;
-    stcDtChannelConfig0.u8CounterSize = DtCounterSize32; 
-    stcDtChannelConfig0.bIrqEnable = TRUE;
-    stcDtChannelConfig0.pfnIrqCallback = DT_IRQHandler;
-    stcDtChannelConfig0.bTouchNvic = TRUE;
+	stcDtChannelConfig0.u8Mode = DtPeriodic;
+  stcDtChannelConfig0.u8PrescalerDiv = DtPrescalerDiv256;
+  stcDtChannelConfig0.u8CounterSize = DtCounterSize32; 
+  stcDtChannelConfig0.bIrqEnable = TRUE;
+  stcDtChannelConfig0.pfnIrqCallback = DT_IRQHandler;
+  stcDtChannelConfig0.bTouchNvic = TRUE;
 	
-    /* Initialize dual timer channel 0 */
-    if (Ok != Dt_Init((stc_dt_channel_config_t*)&stcDtChannelConfig0, DtChannel0))
-    {
-			Gpio1pin_Put(GPIO1PIN_P1A, 1u);
-        while(1);
-    }
+  /* Initialize dual timer channel 0 */
+  if (Ok != Dt_Init((stc_dt_channel_config_t*)&stcDtChannelConfig0, DtChannel0))
+  {
+	Gpio1pin_Put(GPIO1PIN_P1A, 1u);
+      while(1);
+  }
 
-    /* Write load value for channel 0 (0.5sec interval @ PCLK = 80MHz) */
-    Dt_WriteLoadVal(COUNTS_FOR_1_MS, DtChannel0);
-    /* Write background load value for channel 0 (0.5sec -> 1sec @ PCLK = 80MHz) */
-    Dt_WriteBgLoadVal(COUNTS_FOR_1_S, DtChannel0);
-    /* Start count for channel 0 */
-    Dt_EnableCount(DtChannel0);
+  /* Write load value for channel 0 (0.5sec interval @ PCLK = 80MHz) */
+  Dt_WriteLoadVal(COUNTS_FOR_1_S, DtChannel0);
+  /* Write background load value for channel 0 (0.5sec -> 1sec @ PCLK = 80MHz) */
+  Dt_WriteBgLoadVal(COUNTS_FOR_1_S, DtChannel0);
+  /* Start count for channel 0 */
+  Dt_EnableCount(DtChannel0);
 	
 }

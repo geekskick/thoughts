@@ -96,7 +96,7 @@ Go into the project's linker settings and add to the includepath the `drivers/gp
 When loading to the board no 'Algorith for RAM' specified and the CMSIS-DAP fails to load the code on.
 
 ## Solution 
-In target options > debugger make sure that CMSIS-DAP is selected. In it's settings make sure the 32kb algorithm for `0x1FFD0000 - 0x1FFD0DDF` (0x670 long) is selected.
+In target options > debugger make sure that CMSIS-DAP is selected. In it's settings make sure the 32kb algorithm for `0x1FFD0000 - 0x1FFD0DDF` (0xDE0 long) is selected.
 Start of the RAM for Algorithm is `0x2003C00` size = `0x1000`. 
 
 I WILL INVESTIGATE THIS AND THE MEMORY MAP AT A LATER POINT.

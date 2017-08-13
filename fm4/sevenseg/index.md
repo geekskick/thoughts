@@ -45,3 +45,39 @@ With the 7 segement display I want to make somethings appear, `1`, `2`, `3`, ...
 | e | 46| 40 |  LOW |  HIGH| LOW | LOW |  LOW | HIGH| LOW |HIGH |LOW  |HIGH |
 | f | 42| 42 | LOW  | LOW  |LOW  |HIGH  | HIGH| HIGH|LOW  |HIGH |HIGH |HIGH |
 | g | 100| 16| LOW  | HIGH |HIGH |HIGH | HIGH |HIGH |LOW  |HIGH |HIGH |LOW  |
+
+To practice this I setup the [Dual Timer](../timer/index.md) to generate an interrupt, in this interrupt I change the digit shown. Here's an example of how a digit is shown:
+
+``` c
+void show_six( void ){
+	Gpio1pin_Put( GPIO1PIN_P7D, 1u );
+	Gpio1pin_Put( GPIO1PIN_PF1, 0u );
+	Gpio1pin_Put( GPIO1PIN_PF0, 1u );
+	Gpio1pin_Put( GPIO1PIN_P41, 1u );
+	Gpio1pin_Put( GPIO1PIN_P40, 1u );
+	Gpio1pin_Put( GPIO1PIN_P42, 1u );
+	Gpio1pin_Put( GPIO1PIN_P16, 1u );
+}
+```
+
+And here's how the Timer interrupt makes the change:
+
+```c
+void DT_IRQHandler(void){
+	  static int timer_count = 0;
+    Dt_ClrIrqFlag(DtChannel0);    /* Clear Irq */
+		switch(timer_count){
+			case 0: show_zero(); timer_count++; break;
+			case 1: show_one(); timer_count++; break;
+			case 2: show_two(); timer_count++; break;
+			case 3: show_three(); timer_count++; break;
+			case 4: show_four(); timer_count++; break;
+			case 5: show_five(); timer_count++; break;
+			case 6: show_six(); timer_count++; break;
+			case 7: show_seven(); timer_count++; break;
+			case 8: show_eight(); timer_count++; break;
+			case 9: show_nine(); timer_count = 0; break;
+			default: timer_count = 0; break;
+		}	
+}
+```
