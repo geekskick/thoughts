@@ -7,33 +7,30 @@ As part of a project I want to output some letters/numbers on a 7 Segment Displa
 It also happens that there is an arduino guide for it [here](http://haneefputtur.com/7-segment-4-digit-led-display-sma420564-using-arduino.html)
 
 ## First Steps
-<img src=schematic.png>
+![schematic](schematic.png)
 The first thing I did was to plug the segment controls into CN7 pins on the dev kit. I also grounded the `d1` cathode. This means that when I set the relevant pins of the FM4 to be `HIGH` output all of the bits of the display will turn on. 
 
 ``` c
-
 int main(void)
 {
- 
 	// All segments on
-    Gpio1pin_InitOut(GPIO1PIN_P16, Gpio1pin_InitVal(1u));
+	Gpio1pin_InitOut(GPIO1PIN_P16, Gpio1pin_InitVal(1u));
 	Gpio1pin_InitOut(GPIO1PIN_P42, Gpio1pin_InitVal(1u));
 	Gpio1pin_InitOut(GPIO1PIN_P40, Gpio1pin_InitVal(1u));
 	Gpio1pin_InitOut(GPIO1PIN_P41, Gpio1pin_InitVal(1u));
 	Gpio1pin_InitOut(GPIO1PIN_PF0, Gpio1pin_InitVal(1u));
 	Gpio1pin_InitOut(GPIO1PIN_PF1, Gpio1pin_InitVal(1u));
 	Gpio1pin_InitOut(GPIO1PIN_P7D, Gpio1pin_InitVal(1u));
-	
-    
+	   
     while(1)
     {
     }
 }
 ```
 And my output:
-<img src="all_on.jpg">
+![output](all_on.jpg)
 
-#Controlling It
+# Controlling It
 With the 7 segement display I want to make somethings appear, `1`, `2`, `3`, ... and so on. And to make a segment turn on, using my __common cathode__ display I need to make the input to it `HIGH`. To make a 1 appear I need to have segments `b` and `c` on, and the rest off, for example. I made a table to help me with this:
 
 | Segment | Pin | Port/Pin | Display `1` | Display `2` | Display `3` |Display `4` |Display `5` |Display `6` |Display `7` |Display `8` |Display `9` |Display `0` |
@@ -81,3 +78,9 @@ void DT_IRQHandler(void){
 		}	
 }
 ```
+
+And this is the output:
+
+This means I can successfully use the Dual Timer and the 7 segment display. Though it's not that easy to used cause there's lots of repeatition in the code and in setting the digits up.
+
+## Improvements
