@@ -29,6 +29,7 @@ int main(void)
     }
 }
 ```
+
 And my output:
 
 ![output](all_on.JPG)
@@ -82,6 +83,8 @@ void DT_IRQHandler(void){
 }
 ```
 
+The full code can be found [here](count_loop.c)
+
 And this is the output:
 
 ![output](sevenseg_loop.gif)
@@ -89,3 +92,7 @@ And this is the output:
 This means I can successfully use the Dual Timer and the 7 segment display. Though it's not that easy to used cause there's lots of repeatition in the code and in setting the digits up.
 
 ## Improvements
+
+One way to improve the code is to reduce the number of `Gpio1pin_Put` uses and instead use portwise instructions instead. So lets find a port which can be used!
+
+// TODO
