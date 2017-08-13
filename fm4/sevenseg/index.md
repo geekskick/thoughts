@@ -95,4 +95,6 @@ This means I can successfully use the Dual Timer and the 7 segment display. Thou
 
 One way to improve the code is to reduce the number of `Gpio1pin_Put` uses and instead use portwise instructions instead. So lets find a port which can be used!
 
-// TODO
+![pins](port1_pins.png)
+
+It just so happens that Port 1 has 8 pins exposed via the FM4's spare pins so lets use Port1
