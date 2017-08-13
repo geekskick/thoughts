@@ -84,6 +84,8 @@ void DT_IRQHandler(void){
 
 And this is the output:
 
+![output](sevenseg_loop.GIF)
+
 This means I can successfully use the Dual Timer and the 7 segment display. Though it's not that easy to used cause there's lots of repeatition in the code and in setting the digits up.
 
 ## Improvements
