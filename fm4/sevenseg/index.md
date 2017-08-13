@@ -7,7 +7,9 @@ As part of a project I want to output some letters/numbers on a 7 Segment Displa
 It also happens that there is an arduino guide for it [here](http://haneefputtur.com/7-segment-4-digit-led-display-sma420564-using-arduino.html)
 
 ## First Steps
-![schematic](schematic.png)
+
+![schematic](schematic.PNG)
+
 The first thing I did was to plug the segment controls into CN7 pins on the dev kit. I also grounded the `d1` cathode. This means that when I set the relevant pins of the FM4 to be `HIGH` output all of the bits of the display will turn on. 
 
 ``` c
@@ -28,7 +30,8 @@ int main(void)
 }
 ```
 And my output:
-![output](all_on.jpg)
+
+![output](all_on.JPG)
 
 # Controlling It
 With the 7 segement display I want to make somethings appear, `1`, `2`, `3`, ... and so on. And to make a segment turn on, using my __common cathode__ display I need to make the input to it `HIGH`. To make a 1 appear I need to have segments `b` and `c` on, and the rest off, for example. I made a table to help me with this:
