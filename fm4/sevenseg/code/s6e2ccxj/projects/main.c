@@ -18,7 +18,6 @@ TimerVal = Interval * (TIMCLKfreq/Prescale) - 1
 therefore with a PRESCALE @ 256, and a TIMCLK set by the APB Clock at 100MHz
 Interval = 1sec, therefore 1 * (100*10^6) - 1 = 390625 - 1 = 390624
 Interval = 0.5sec, therefore 0.5 * (100*10^6) - 1 = (390625/2) - 1 = 195313 - 1 = 195312
-
 */
 #define COUNTS_FOR_1_S                                                390624u
 #define COUNTS_FOR_500_MS                                             195312u
@@ -195,10 +194,9 @@ void configure_timer( void ){
   }
 
   /* Write load value for channel 0 (1sec interval @ PCLK = 100MHz) */
-  Dt_WriteLoadVal(COUNTS_FOR_1_S, DtChannel0);
+  Dt_WriteLoadVal(COUNTS_FOR_500_MS, DtChannel0);
   /* Write background load value for channel 0 (1sec @ PCLK = 100MHz) */
-  Dt_WriteBgLoadVal(COUNTS_FOR_1_S, DtChannel0);
+  Dt_WriteBgLoadVal(COUNTS_FOR_500_MS, DtChannel0);
   /* Start count for channel 0 */
   Dt_EnableCount(DtChannel0);
-	
 }
