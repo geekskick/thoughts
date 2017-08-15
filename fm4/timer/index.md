@@ -1,6 +1,7 @@
 # Using the Timer Interrupt
 
 The FM4 has a heap of timers which I can use:
+
 | Timer | Use |
 | --- | --- |
 | Watchdog | Watchdog timer, duh! |
@@ -27,12 +28,12 @@ To create a delay it makes sense that I would like some control over how long to
 
 The datasheet gives a pretty good equation to calculate the value I need to put into the `Load Register`:
 
-<img src="timer_val.png">
+<img src="timer_val.PNG">
 
 So to calculate the correct load value I need to know the following things:
 __TIMCLK__ = The block diagram in the datasheet shows that the Dual Timer is connected to the APB bus and it is 100MHz as described [here](../clocks/index.md).
 
-<img src="timer_block_box.png">
+<img src="timer_block_box.PNG">
 
 __PRESCALE__ = This is configurable using the PDL provided `stc_dt_channel_config_t.u8PrescalerDiv` struct member.
 __Timer Interval__ = I want this to be 1 second.
