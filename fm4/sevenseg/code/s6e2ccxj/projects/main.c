@@ -22,6 +22,16 @@ Interval = 0.5sec, therefore 0.5 * (100*10^6) - 1 = (390625/2) - 1 = 195313 - 1 
 #define COUNTS_FOR_1_S                                                390624u
 #define COUNTS_FOR_500_MS                                             195312u
 
+#define Seg_Zero  0x3F
+#define Seg_One   0x06
+#define Seg_Two   0x5B
+#define Seg_Three 0x4F
+#define Seg_Four  0x66
+#define Seg_Five  0x6D
+#define Seg_Six	  0x7D
+#define Seg_Seven 0x07
+#define Seg_Eight 0x7F
+#define Seg_Nine  0x6F
 
 void show_one( void );
 void show_two( void );
@@ -57,7 +67,8 @@ void DT_IRQHandler(void){
 int main(void)
 {
   configure_gpio();
-	configure_timer();
+	//configure_timer();
+	show_one();
 	Gpio1pin_Put(GPIO1PIN_P1A,  1u);
 
   while(1);
@@ -65,12 +76,12 @@ int main(void)
 
 void configure_gpio( void ){
 		// All segments on
-  Gpio1pin_InitOut(GPIO1PIN_P7D, Gpio1pin_InitVal(1u));
-	Gpio1pin_InitOut(GPIO1PIN_PF1, Gpio1pin_InitVal(1u));
-	Gpio1pin_InitOut(GPIO1PIN_PF0, Gpio1pin_InitVal(1u));
-	Gpio1pin_InitOut(GPIO1PIN_P41, Gpio1pin_InitVal(1u));
-	Gpio1pin_InitOut(GPIO1PIN_P40, Gpio1pin_InitVal(1u));
-	Gpio1pin_InitOut(GPIO1PIN_P42, Gpio1pin_InitVal(1u));
+  Gpio1pin_InitOut(GPIO1PIN_P10, Gpio1pin_InitVal(1u));
+	Gpio1pin_InitOut(GPIO1PIN_P11, Gpio1pin_InitVal(1u));
+	Gpio1pin_InitOut(GPIO1PIN_P12, Gpio1pin_InitVal(1u));
+	Gpio1pin_InitOut(GPIO1PIN_P13, Gpio1pin_InitVal(1u));
+	Gpio1pin_InitOut(GPIO1PIN_P14, Gpio1pin_InitVal(1u));
+	Gpio1pin_InitOut(GPIO1PIN_P15, Gpio1pin_InitVal(1u));
 	Gpio1pin_InitOut(GPIO1PIN_P16, Gpio1pin_InitVal(1u));
 	
 	// Red RGB
@@ -78,13 +89,7 @@ void configure_gpio( void ){
 }
 
 void show_one( void ){
-	Gpio1pin_Put( GPIO1PIN_P7D,0u );
-	Gpio1pin_Put( GPIO1PIN_PF1,1u );
-	Gpio1pin_Put( GPIO1PIN_PF0,1u );
-	Gpio1pin_Put( GPIO1PIN_P41,0u );
-	Gpio1pin_Put( GPIO1PIN_P40,0u );
-	Gpio1pin_Put( GPIO1PIN_P42,0u );
-	Gpio1pin_Put( GPIO1PIN_P16,0u );
+	FM4_GPIO_PDOR1 = Seg_One;
 }
 
 void show_two( void ){
