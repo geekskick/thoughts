@@ -144,9 +144,9 @@ I can confirm this by looking at the [system description file](code/s6e2ccxj/com
 
 Being able to write to a whole port using the `FM4_GPIO_PDOR1` is pretty cool, but it means that the table above needs to be converter to a set of bits to put in the `PDOR1` register. This is how I will use it
 
+
 | __PDOR1 Bit__ | 15 | 14 | 13 | 12 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |    |
 | __ Segment__  |  x | x  | x  | x  | x  | x  | x | x | x | g | f | e | d | c | b | a |Sum(hex) |
-| ---			| ---|--- |--- |--- | ---| ---|---|---|---|---|---|---|---|---|---|---| ---|
 |Zero 			|  x | x  | x  | x  | x  | x  | x | x | x | 0 | 1 | 1 | 1 | 1 | 1 | 1 | `0x3F` |
 |One 			|  x | x  | x  | x  | x  | x  | x | x | x | 0 | 0 | 0 | 0 | 1 | 1 | 0 | `0x06` |
 |Two 			|  x | x  | x  | x  | x  | x  | x | x | x | 1 | 0 | 1 | 1 | 0 | 1 | 1 | `0x5B` |
