@@ -93,8 +93,51 @@ This means I can successfully use the Dual Timer and the 7 segment display. Thou
 
 ## Improvements
 
+### Port Usage
+
 One way to improve the code is to reduce the number of `Gpio1pin_Put` uses and instead use portwise instructions instead. So lets find a port which can be used!
 
 ![pins](port1_pins.png)
 
-It just so happens that Port 1 has 8 pins exposed via the FM4's spare pins so lets use Port1
+It just so happens that Port 1 has 8 pins exposed via the FM4's spare pins so lets use Port1. The next thing I need to know how to do is to condense this bit of code 
+
+```c
+Gpio1pin_Put( GPIO1PIN_P17, 1u );
+Gpio1pin_Put( GPIO1PIN_P16, 0u );
+Gpio1pin_Put( GPIO1PIN_P15, 1u );
+Gpio1pin_Put( GPIO1PIN_P14, 1u );
+Gpio1pin_Put( GPIO1PIN_P13, 1u );
+Gpio1pin_Put( GPIO1PIN_P12, 1u );
+Gpio1pin_Put( GPIO1PIN_P11, 1u );
+
+```
+
+Since they are on the same port I assumed that the PDL would offer some kind of function to write to the port instead of individual bits. I did some googling an found that in v1.0 of the PDL a `GpioPut( port )` function was provided however it seems that in version 2.1.0 this has been removed. The options seem to be as follows: 
+
+1. Write a generic function to add to the PDL which is portable. 
+2. Look at the datasheet and write to the FM4 specific address for `Port1`.
+3. Probably something else, let me know if I've missed something.
+
+My choice of the above is number 2: Look at the datasheet and write to the FM4 specific address for `Port1`.
+
+![Gpio Registers](gpio_table.PNG)
+
+Table 2-1 in the peripheral datasheet above shows that the __PDOR__ register determines the state of the output pin.
+
+There is also a __PDOR1__ register listed:
+
+![pdor list](PDOR_table.PNG)
+
+I can find out which address this is at by using the `GPIO Base Address` and the register's offset.
+
+```
+Base_Address = 0x4006_F000
+PDOR1 Offset = 0x404
+PDOR1 Address = 0x4006_F404
+```
+
+I can confirm this by looking at the [system description file](code/s6e2ccxj/common/s6e2ccxj.h), where it's handily defined as `FM4_GPIO_PDOR1`:
+
+![pdor address](system_pdor1.PNG)
+
+### Bit Masks
