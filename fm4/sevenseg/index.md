@@ -158,3 +158,18 @@ Being able to write to a whole port using the `FM4_GPIO_PDOR1` is pretty cool, b
 | Seven			|  x | x  | x  | x  | x  | x  | x | x | x | 0 | 0 | 0 | 0 | 1 | 1 | 1 | `0x07` |
 | Eight			|  x | x  | x  | x  | x  | x  | x | x | x | 1 | 1 | 1 | 1 | 1 | 1 | 1 | `0x7F` |
 | Nine			|  x | x  | x  | x  | x  | x  | x | x | x | 1 | 1 | 0 | 1 | 1 | 1 | 1 | `0x6F` |
+
+
+This means that my Timer Interrupt can now be way shorter:
+
+```c
+void DT_IRQHandler(void){
+	static int seg_values[] = { Seg_Zero, Seg_One, Seg_Two, Seg_Three, Seg_Four, Seg_Five, Seg_Six, Seg_Seven, Seg_Eight, Seg_Nine };
+	static int timer_count = 0;
+    Dt_ClrIrqFlag(DtChannel0);    /* Clear Irq */
+	FM4_GPIO_PDOR1 = seg_values[timer_count++];
+	if(timer_count > 9){ timer_count = 0; }
+}
+```
+
+AND I can get ride of all the `show_one()` ... type functions. The final code is [here](bit_code.c)
